@@ -1,0 +1,15 @@
+<div class="border border-slate-700/50 rounded-lg hover:shadow-md transition-all duration-200 {{ item.color }} backdrop-blur-sm" 
+     style="height: {{ base_row_height }}rem;">
+    <!-- Datum -->
+    <div class="bg-slate-800/80 p-2 rounded-t-lg border-b border-slate-700/50">
+        <h3 class="text-sm font-medium text-slate-300 text-center">{{ date.strftime("%d.%m.") }}</h3>
+    </div>
+
+    <!-- Zeitoptionen -->
+    <div class="p-2 flex {% if compact_mode == "1" %}flex-row justify-center gap-2{% else %}flex-col gap-1{% endif %}">
+        {% for period in colors_times_of_day.keys() %}
+            {% set curr_icon_color = colors_times_of_day[period]['checked' if date.strftime('%Y-%m-%d') in selected_times and period in selected_times[date.strftime('%Y-%m-%d')] else 'unchecked'] %}
+            {% include 'period_icon.html' %}
+        {% endfor %}
+    </div>
+</div>

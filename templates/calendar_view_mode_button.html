@@ -1,0 +1,6 @@
+<button
+    class="flex items-center gap-2 px-3 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-slate-100 rounded-md font-medium"
+    @click="$store.viewMode.toggle()">
+    <span class="material-icons text-sm" x-text="$store.viewMode.compact ? 'zum Normalmodus' : 'zum Kompaktmodus'">
+    </span>
+</button>

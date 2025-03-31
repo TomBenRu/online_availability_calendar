@@ -1,0 +1,25 @@
+<div id="{{ period }}-icon-{{ date.strftime('%Y-%m-%d') }}"
+     x-data="{ showTooltip: false }"
+     class="flex items-center gap-1 p-0 rounded-lg text-{{ curr_icon_color }} hover:bg-gray-100/50 transition-colors cursor-pointer relative"
+     hx-post="{{ url_for('select_time') }}"
+     hx-vals='{"date": "{{ date.strftime('%Y-%m-%d') }}", "period": "{{ period }}", "compact_mode": "{{ compact_mode }}"}'
+     hx-swap="none"
+     @mouseenter="showTooltip = true"
+     @mouseleave="showTooltip = false"
+     {% if is_response|default(false) %}hx-swap-oob="true"{% endif %}>
+    {% include 'icons/' + period + '.html' %}
+    {% if compact_mode == "0" %}
+        <span class="text-sm">{{ period_translation[period] }}</span>
+    {% else %}
+        <div x-show="showTooltip"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 transform scale-95"
+             x-transition:enter-end="opacity-100 transform scale-100"
+             x-transition:leave="transition ease-in duration-300"
+             x-transition:leave-start="opacity-100 transform scale-100"
+             x-transition:leave-end="opacity-0 transform scale-95"
+             class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-sm text-slate-200 bg-slate-700 rounded shadow-lg whitespace-nowrap">
+            {{ period_translation[period] }}
+        </div>
+    {% endif %}
+</div>
