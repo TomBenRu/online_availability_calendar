@@ -40,6 +40,7 @@ class PlanPeriod(db.Entity):
     prep_delete = Optional(datetime.datetime)
     employee_plan_periods = Set('EmployeePlanPeriod')
     team = Required('Team')
+    apscheduler_job = Optional('APSchedulerJob')
 
 
 class Person(db.Entity):
@@ -92,3 +93,18 @@ class EmployeePlanPeriod(db.Entity):
     availabilities = Set(Availability)
     plan_period = Required(PlanPeriod)
     person = Required(Person)
+
+
+class APSchedulerJob(db.Entity):
+    id = PrimaryKey(UUID, auto=True)
+    job_id = Required(str, 50, unique=True)
+    name = Required(str, default="APScheduler Job")
+    func_name = Required(str)
+    args = Optional(str)
+    kwargs = Optional(str)
+    trigger_type = Required(str)
+    trigger_args = Required(str)
+    next_runt_ime = Optional(datetime.datetime)
+    active = Required(bool, default='true')
+    created_at = Required(datetime.datetime)
+    plan_period = Required(PlanPeriod)
